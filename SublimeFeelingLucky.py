@@ -1,8 +1,7 @@
-import sublime, sublime_plugin, re, os
+import sublime, sublime_plugin, re, os, json
 
 _word = ""
 _prefix = ""
-
 
 def _showAlert(message) :
 	sublime.error_message("SublimeFeelingLucky\n\n" + message)
@@ -13,6 +12,15 @@ class FeelingLuckyCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		global _prefix
 		global _word
+
+		# load json
+		f = open(sublime.active_window().folders()[0] + "/config.feelinglucky")
+		data = json.load(f)
+		f.close()
+		print data
+		print data[0]['css'][0]
+		print data[0]['sass'][0]
+
 
 		for region in self.view.sel():
 			_word = self.view.substr(self.view.word(region))
@@ -37,6 +45,9 @@ class FeelingLuckyCommand(sublime_plugin.TextCommand):
 					sublime.active_window().open_file(file)
 
 
+#
+# css file
+#
 class FeelingLuckyCssFileCommand(sublime_plugin.TextCommand):
 
 	def run(self, edit):
@@ -50,16 +61,26 @@ class FeelingLuckyCssFileCommand(sublime_plugin.TextCommand):
 		self.view.show(match)
 
 
+#
+# event
+#
 class SublimeFeelingLuckyEventListener(sublime_plugin.EventListener):
 
 	def on_load(self, view):
-		call(view)
+		self.call(view)
 
 	def on_activated(self, view):
-		call(view)
+		self.call(view)
 
 	def call(self, view):
 		view.run_command('feeling_lucky_css_file')
 
 
-# class MakeSublimeFeelingLuckyFile():
+#
+# config.feelinglucky
+#
+class MakeConfigDotFeelingLucky():
+	print 'Make config.feelingLucky'
+
+
+
