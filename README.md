@@ -7,15 +7,6 @@ SublimeFeelingLucky is Sublime Text Plugin which can open the related files of i
 
 ## Installation
 
-### Package Control
-
-using [Sublime Package Control](http://wbond.net/sublime_packages/package_control), you can easily install the SublimeFeelingLucky.
-
-````
-Sublime Text 2 -> Preferences -> Package Control: Install Package
-````  
-
-
 ### GitHub
 Download the latest source from GitHub and copy the SublimeFeelingLucky folder to your Sublime Text `Packages` dir.
 
