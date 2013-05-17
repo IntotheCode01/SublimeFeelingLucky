@@ -1,4 +1,5 @@
 [
 	{ "caption": "-" },
-	{ "caption": "Sublime Feeling Lucky", "command": "feeling_lucky" }
+	{ "caption": "Sublime Feeling Lucky", "command": "feeling_lucky" },
+	{ "caption": "Make config.feelinglucky", "command": "make_config_dot_feeling_lucky" }
 ]
