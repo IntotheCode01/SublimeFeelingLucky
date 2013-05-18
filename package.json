@@ -1,15 +1,17 @@
 {
-    "schema_version": "0.1",
+    "schema_version": "1.2",
     "packages": [
         {
             "name": "SublimeFeelingLucky",
-            "description": "",
-            "author": "hirofumi kaneko",
+            "description": "SublimeFeelingLucky is Sublime Text Plugin which can open the related css files of id or class of designation in html files",
+            "author": "hirofumi_kaneko",
             "homepage": "http://github.com/azzip/SublimeFeelingLucky",
-            "last_modified": "2013/05/17",
+            "last_modified": "2013-05-18 14:00:00",
             "platforms": {
-                "*": [
+                "osx": [
                     {
+                        "version": "0.1",
+                        "url": "https://nodeload.github.com/azzip/SublimeFeelingLucky/zip/v0.1"
                     }
                 ]
             }
