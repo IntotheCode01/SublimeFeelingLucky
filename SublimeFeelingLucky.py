@@ -51,7 +51,6 @@ class FeelingLucky(sublime_plugin.TextCommand):
 						# TODO
 						# Already Open file move
 
-						print self.view.window()
 						self.view.window().run_command('expand_and_focus_right_panel', { "len": len(data["css"]), "count": count })
 						cssView = self.view.window().open_file(cssFile)
 						cssView.window().set_view_index(cssView, count, 0)
@@ -127,13 +126,26 @@ class MakeConfigDotFeelingLucky(sublime_plugin.TextCommand):
 
 	def run(self, edit):
 
-		if os.path.isfile(os.path.join(sublime.active_window().folders()[0], "config.feelinglucky")) :
+		projectPath = sublime.active_window().folders()[0]
+
+		if os.path.isfile(os.path.join(projectPath, "config.feelinglucky")) :
 			_showAlert("Found config.feelingLucky")
 
 		else :
+			css = []
+			sass = []
+			for root, dirs, files in os.walk(projectPath):
+			    for file in files:
+			    	f = os.path.join(root, file)
+			    	ff = f.replace(projectPath + "/", "")
+			    	if file[-4:] == ".css" :
+			    		css.append(ff)
+		    		elif file[-5:] == ".sass" :
+		    			sass.append(ff)
+
 			print 'Make config.feelingLucky'
-			config = { "sass":[], "css":["style.css"] }
-			file = open(os.path.join(sublime.active_window().folders()[0], "config.feelinglucky"), "w")
+			config = { "sass":sass, "css":css }
+			file = open(os.path.join(projectPath, "config.feelinglucky"), "w")
 			json.dump(config, file, indent=4)
 
 
