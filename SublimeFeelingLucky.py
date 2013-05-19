@@ -45,13 +45,15 @@ class FeelingLucky(sublime_plugin.TextCommand):
 			if "css" in data :
 				for css in data["css"] :
 					count += 1
-					if os.path.isfile(os.path.join(projectPath, css)) :
+					cssFile = os.path.join(projectPath, css)
+					if os.path.isfile(cssFile) :
 
 						# TODO
 						# Already Open file move
 
+						print self.view.window()
 						self.view.window().run_command('expand_and_focus_right_panel', { "len": len(data["css"]), "count": count })
-						cssView = self.view.window().open_file(css)
+						cssView = self.view.window().open_file(cssFile)
 						cssView.window().set_view_index(cssView, count, 0)
 					else :
 						_printError("Not found " + css)
@@ -59,8 +61,11 @@ class FeelingLucky(sublime_plugin.TextCommand):
 			# check sass
 			if "sass" in data :
 				for sass in data["sass"] :
-					if os.path.isfile(os.path.join(projectPath, sass)) :
-						sublime.active_window().open_file(sass)
+					count += 1
+					sassFile = os.path.join(projectPath, sass)
+					if os.path.isfile(sassFile) :
+						sassView = self.view.window().open_file(sassFile)
+						sassView.window().set_view_index(sassView, count, 0)
 					else :
 						_printError("Not found " + sass)
 
