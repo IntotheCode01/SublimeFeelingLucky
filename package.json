@@ -2,7 +2,7 @@
     "schema_version": "1.2",
     "packages": [
         {
-            "name": "SublimeFeelingLucky",
+            "name": "FeelingLucky",
             "description": "SublimeFeelingLucky is Sublime Text Plugin which can open the related css files of id or class of designation in html files",
             "author": "hirofumi_kaneko",
             "homepage": "http://github.com/azzip/SublimeFeelingLucky",

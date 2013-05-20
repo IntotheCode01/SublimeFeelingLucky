@@ -1,10 +1,10 @@
 [
     {
-        "caption": "SublimeFeelingLucky: Feeling Lucky",
+        "caption": "FeelingLucky: Feeling Lucky",
         "command": "feeling_lucky"
     },
     {
-        "caption": "SublimeFeelingLucky: Make config.feelinglucky",
+        "caption": "FeelingLucky: Make config.feelinglucky",
         "command": "make_config_dot_feeling_lucky"
     }
 ]
