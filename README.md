@@ -7,6 +7,13 @@ SublimeFeelingLucky is Sublime Text Plugin which can open the related files of i
 
 ## Installation
 
+### Package Control
+using [Sublime Package Control](http://wbond.net/sublime_packages/package_control), you can easily install the **SublimeFeelingLucky**.
+
+````
+Sublime Text 2 -> Preferences -> Package Control: Install Package
+````  
+
 ### GitHub
 Download the latest source from GitHub and copy the SublimeFeelingLucky folder to your Sublime Text `Packages` dir.
 
@@ -20,6 +27,7 @@ $ git clone git@github.com:azzip/SublimeFeelingLucky.git
 
 
 ## config.feelinglucky
+`config.feelinglucky` is required.  
 Designation of `.css` and `.sass` target file.
 
 ### Make
@@ -36,7 +44,6 @@ Designation of `.css` and `.sass` target file.
     ],
     "sass": []
 }
-
 ````
 
 ## Usage
