@@ -1,7 +1,7 @@
 #
 # SublimeFeelingLucky.py
 #
-# v 0.1
+# v 0.1.2
 #
 
 import sublime, sublime_plugin, re, os, json, time
@@ -63,11 +63,15 @@ class FeelingLucky(sublime_plugin.TextCommand):
 					count += 1
 					sassFile = os.path.join(projectPath, sass)
 					if os.path.isfile(sassFile) :
+
+						# TODO
+						# Already Open file move
+
+						self.view.window().run_command('expand_and_focus_right_panel', { "len": len(data["sass"]), "count": count })
 						sassView = self.view.window().open_file(sassFile)
 						sassView.window().set_view_index(sassView, count, 0)
 					else :
 						_printError("Not found " + sass)
-
 
 	def loadJSON(self) :
 		try:
@@ -82,13 +86,13 @@ class FeelingLucky(sublime_plugin.TextCommand):
 
 
 #
-# css file
+# css/sass file
 #
 class FeelingLuckyCssFile(sublime_plugin.TextCommand):
 
 	def run(self, edit):
 
-		if not _check(self, -3, "css") :
+		if not _check(self, -3, "css") and not _check(self, -4, "sass"):
 			return
 
 		text = _prefix + _word
@@ -96,12 +100,7 @@ class FeelingLuckyCssFile(sublime_plugin.TextCommand):
 		if match :
 			self.view.sel().clear()
 			self.view.sel().add(match)
-			self.view.show(match)
-
-		else :
-			# TODO
-			# not match file close
-			return
+			self.view.show_at_center(match)
 
 
 #
