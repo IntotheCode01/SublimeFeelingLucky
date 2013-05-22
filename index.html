@@ -28,32 +28,91 @@
         </ul>
       </header>
       <section>
-        <h3>Welcome to GitHub Pages.</h3>
+        <h1>FeelingLucky</h1>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>FeelingLucky is Sublime Text Plugin which can open the related files of id or class of designation in html files.</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<p><img src="http://farm8.staticflickr.com/7293/8748074716_51763c0840_o.jpg" alt="FeelingLucky"></p>
+
+<h2>Installation</h2>
+
+<h3>Package Control</h3>
+
+<p>using <a href="http://wbond.net/sublime_packages/package_control">Sublime Package Control</a>, you can easily install the <strong>FeelingLucky</strong>.</p>
+
+<pre><code>Sublime Text 2 -&gt; Preferences -&gt; Package Control: Install Package
 </code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<h3>GitHub</h3>
 
-<h3>Designer Templates</h3>
+<p>Download the latest source from GitHub and copy the SublimeFeelingLucky folder to your Sublime Text <code>Packages</code> dir.</p>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<h3>Git</h3>
 
-<h3>Rather Drive Stick?</h3>
+<p>Clone the repository in your Sublime Text <code>Packages</code> dir</p>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<pre><code>$ cd Packages
+$ git clone git@github.com:azzip/SublimeFeelingLucky.git
+</code></pre>
 
-<h3>Authors and Contributors</h3>
+<h2>config.feelinglucky</h2>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<p><code>config.feelinglucky</code> is required.<br>
+Designation of <code>.css</code>, <code>.sass</code>, <code>.js</code>, <code>.coffee</code> target file.</p>
 
-<h3>Support or Contact</h3>
+<h3>Make</h3>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<ol>
+<li>Context Menu <code>Make config.feelinglucky</code><br>
+</li>
+<li>Command short cut <code>super+ctrl+e</code>
+</li>
+</ol><h3>Example</h3>
+
+<pre><code>{
+    "css": [
+        "style.css"
+    ],
+    "sass": [],
+    "js": [
+        "index.js"    
+    ],    
+    "coffee": []        
+}
+</code></pre>
+
+<h2>Usage</h2>
+
+<p>Open Command Palette… <code>feeling lucky</code></p>
+
+<pre><code>Tools -&gt; Command Palette… -&gt; feeling lucky
+</code></pre>
+
+<p>or</p>
+
+<p>use Default.sublime-keymap </p>
+
+<ul>
+<li>css, sass : <code>ctrl+e</code>
+</li>
+<li>js, coffee : <code>ctrl+shift+e</code>
+</li>
+</ul><h2>Default.sublime-keymap</h2>
+
+<pre><code>[
+    { "keys": ["ctrl+e"], "command": "feeling_lucky_css" },
+    { "keys": ["ctrl+shift+e"], "command": "feeling_lucky_js" },
+    { "keys": ["super+ctrl+e"], "command": "make_config_dot_feeling_lucky" }
+]
+</code></pre>
+
+<h2>What's New</h2>
+
+<p>v0.2.0 (2013/05/23) :  </p>
+
+<ul>
+<li>Open <code>.js</code>, <code>.coffee</code> files in new right panel.</li>
+</ul>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/azzip">azzip</a></p>
