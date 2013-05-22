@@ -1,14 +1,15 @@
-SublimeFeelingLucky
+FeelingLucky
 ===================
 
-SublimeFeelingLucky is Sublime Text Plugin which can open the related files of id or class of designation in html files.
+FeelingLucky is Sublime Text Plugin which can open the related files of id or class of designation in html files.
 
-![SublimeFeelingLucky](http://farm8.staticflickr.com/7293/8748074716_51763c0840_o.jpg)
+![FeelingLucky](http://farm8.staticflickr.com/7293/8748074716_51763c0840_o.jpg)
+
 
 ## Installation
 
 ### Package Control
-using [Sublime Package Control](http://wbond.net/sublime_packages/package_control), you can easily install the **SublimeFeelingLucky**.
+using [Sublime Package Control](http://wbond.net/sublime_packages/package_control), you can easily install the **FeelingLucky**.
 
 ````
 Sublime Text 2 -> Preferences -> Package Control: Install Package
@@ -28,11 +29,11 @@ $ git clone git@github.com:azzip/SublimeFeelingLucky.git
 
 ## config.feelinglucky
 `config.feelinglucky` is required.  
-Designation of `.css` and `.sass` target file.
+Designation of `.css`, `.sass`, `.js`, `.coffee` target file.
 
 ### Make
-1) Context Menu `Make config.feelinglucky`  
-2) Command short cut `super+ctrl+e`
+1. Context Menu `Make config.feelinglucky`  
+2. Command short cut `super+ctrl+e`
 
 
 ### Example
@@ -42,7 +43,11 @@ Designation of `.css` and `.sass` target file.
     "css": [
         "style.css"
     ],
-    "sass": []
+    "sass": [],
+    "js": [
+        "index.js"    
+    ],    
+    "coffee": []        
 }
 ````
 
@@ -52,17 +57,28 @@ Open Command Palette… `feeling lucky`
 ````
 Tools -> Command Palette… -> feeling lucky
 ````  
+or
+
+use Default.sublime-keymap 
+
+* css, sass : `ctrl+e`
+* js, coffee : `ctrl+shift+e`
+ 
+
 
 
 ## Default.sublime-keymap
 
 ````
 [
-	{ "keys": ["ctrl+e"], "command": "feeling_lucky" },
-	{ "keys": ["super+ctrl+e"], "command": "make_config_dot_feeling_lucky" }
+    { "keys": ["ctrl+e"], "command": "feeling_lucky_css" },
+    { "keys": ["ctrl+shift+e"], "command": "feeling_lucky_js" },
+    { "keys": ["super+ctrl+e"], "command": "make_config_dot_feeling_lucky" }
 ]
 ````
 
-## License
+## What's New
 
-MIT
+v0.2.0 (2013/05/23) :  
+
+* Open `.js`, `.coffee` files in new right panel.

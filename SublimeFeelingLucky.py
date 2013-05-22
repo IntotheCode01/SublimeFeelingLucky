@@ -1,14 +1,37 @@
 #
 # SublimeFeelingLucky.py
 #
-# v 0.1.2
+# v 0.2.0
 #
 
 import sublime, sublime_plugin, re, os, json, time
 
 _word = ""
 _prefix = ""
+_type = ""
 
+#
+# css
+#
+class FeelingLuckyCss(sublime_plugin.TextCommand):
+	def run(self, edit):
+		global _type
+		_type = "css"
+		self.view.run_command("feeling_lucky")
+
+#
+# js
+#
+class FeelingLuckyJs(sublime_plugin.TextCommand):
+	def run(self, edit):
+		global _type
+		_type = "js"
+		self.view.run_command("feeling_lucky")
+
+
+#
+# main
+#
 class FeelingLucky(sublime_plugin.TextCommand):
 
 	def run(self, edit):
@@ -41,37 +64,75 @@ class FeelingLucky(sublime_plugin.TextCommand):
 
 			count = 0
 
-			# check css
-			if "css" in data :
-				for css in data["css"] :
-					count += 1
-					cssFile = os.path.join(projectPath, css)
-					if os.path.isfile(cssFile) :
+			if _type == "css" :
 
-						# TODO
-						# Already Open file move
+				# check css
+				if "css" in data :
+					for css in data["css"] :
+						count += 1
+						cssFile = os.path.join(projectPath, css)
+						if os.path.isfile(cssFile) :
 
-						self.view.window().run_command('expand_and_focus_right_panel', { "len": len(data["css"]), "count": count })
-						cssView = self.view.window().open_file(cssFile)
-						cssView.window().set_view_index(cssView, count, 0)
-					else :
-						_printError("Not found " + css)
+							# TODO
+							# Already Open file move
 
-			# check sass
-			if "sass" in data :
-				for sass in data["sass"] :
-					count += 1
-					sassFile = os.path.join(projectPath, sass)
-					if os.path.isfile(sassFile) :
+							self.view.window().run_command('expand_and_focus_right_panel', { "len": len(data["css"]), "count": count })
+							cssView = self.view.window().open_file(cssFile)
+							cssView.window().set_view_index(cssView, count, 0)
+						else :
+							_printError("Not found " + css)
 
-						# TODO
-						# Already Open file move
+				# check sass
+				if "sass" in data :
+					for sass in data["sass"] :
+						count += 1
+						sassFile = os.path.join(projectPath, sass)
+						if os.path.isfile(sassFile) :
 
-						self.view.window().run_command('expand_and_focus_right_panel', { "len": len(data["sass"]), "count": count })
-						sassView = self.view.window().open_file(sassFile)
-						sassView.window().set_view_index(sassView, count, 0)
-					else :
-						_printError("Not found " + sass)
+							# TODO
+							# Already Open file move
+
+							self.view.window().run_command('expand_and_focus_right_panel', { "len": len(data["sass"]), "count": count })
+							sassView = self.view.window().open_file(sassFile)
+							sassView.window().set_view_index(sassView, count, 0)
+						else :
+							_printError("Not found " + sass)
+
+			elif _type == "js" :
+
+				# check js
+				if "js" in data :
+
+					for js in data["js"] :
+						count += 1
+						jsFile = os.path.join(projectPath, js)
+						if os.path.isfile(jsFile) :
+
+							# TODO
+							# Already Open file move
+
+							self.view.window().run_command('expand_and_focus_right_panel', { "len": len(data["js"]), "count": count })
+							jsView = self.view.window().open_file(jsFile)
+							jsView.window().set_view_index(jsView, count, 0)
+						else :
+							_printError("Not found " + js)
+
+				# check coffee
+				if "coffee" in data :
+					for coffee in data["coffee"] :
+						count += 1
+						coffeeFile = os.path.join(projectPath, coffee)
+						if os.path.isfile(coffeeFile) :
+
+							# TODO
+							# Already Open file move
+
+							self.view.window().run_command('expand_and_focus_right_panel', { "len": len(data["coffee"]), "count": count })
+							coffeeView = self.view.window().open_file(coffeeFile)
+							coffeeView.window().set_view_index(coffeeView, count, 0)
+						else :
+							_printError("Not found " + coffee)
+
 
 	def loadJSON(self) :
 		try:
@@ -86,21 +147,46 @@ class FeelingLucky(sublime_plugin.TextCommand):
 
 
 #
+# file check
+#
+class FeelingLuckyFile(sublime_plugin.TextCommand):
+
+	def run(self, edit):
+		if _type == "css" :
+			if _check(self, -3, "css") or _check(self, -4, "scss") :
+				command = "feeling_lucky_css_file"
+				return
+		elif _type == "js" :
+			if _check(self, -2, "js") or _check(self, -6, "coffee") :
+				command = "feeling_lucky_js_file"
+				return
+		else :
+			return
+
+			self.view.run_command(command)
+
+#
 # css/sass file
 #
 class FeelingLuckyCssFile(sublime_plugin.TextCommand):
 
 	def run(self, edit):
 
-		if not _check(self, -3, "css") and not _check(self, -4, "sass"):
-			return
+		text = _prefix + _word
+		match = self.view.find(text, 0, sublime.LITERAL)
+		_scrollMatchPoint(self, match)
+
+
+#
+# js/coffee file
+#
+class FeelingLuckyJsFile(sublime_plugin.TextCommand):
+
+	def run(self, edit):
 
 		text = _prefix + _word
 		match = self.view.find(text, 0, sublime.LITERAL)
-		if match :
-			self.view.sel().clear()
-			self.view.sel().add(match)
-			self.view.show_at_center(match)
+		_scrollMatchPoint(self, match)
 
 
 #
@@ -115,7 +201,7 @@ class FeelingLuckyEventListener(sublime_plugin.EventListener):
 		self.call(view)
 
 	def call(self, view):
-		view.run_command("feeling_lucky_css_file")
+		view.run_command("feeling_lucky_file")
 
 
 #
@@ -139,7 +225,7 @@ class MakeConfigDotFeelingLucky(sublime_plugin.TextCommand):
 			    	ff = f.replace(projectPath + "/", "")
 			    	if file[-4:] == ".css" :
 			    		css.append(ff)
-		    		elif file[-5:] == ".sass" :
+		    		elif file[-5:] == ".scss" :
 		    			sass.append(ff)
 
 			print 'Make config.feelingLucky'
@@ -209,7 +295,10 @@ def _check(self, range, type) :
 	else :
 		return False
 
-
-
-
+# scroll
+def _scrollMatchPoint(self, match) :
+	if match :
+		self.view.sel().clear()
+		self.view.sel().add(match)
+		self.view.show_at_center(match)
 

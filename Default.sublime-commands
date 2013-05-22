@@ -1,7 +1,11 @@
 [
     {
-        "caption": "SublimeFeelingLucky: Feeling Lucky",
-        "command": "feeling_lucky"
+        "caption": "SublimeFeelingLucky: Feeling Lucky css/sass",
+        "command": "feeling_lucky_css"
+    },
+    {
+        "caption": "SublimeFeelingLucky: Feeling Lucky js/coffee",
+        "command": "feeling_lucky_js"
     },
     {
         "caption": "SublimeFeelingLucky: Make config.feelinglucky",

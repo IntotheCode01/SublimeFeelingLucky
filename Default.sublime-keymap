@@ -1,4 +1,5 @@
 [
-	{ "keys": ["ctrl+e"], "command": "feeling_lucky" },
+	{ "keys": ["ctrl+e"], "command": "feeling_lucky_css" },
+	{ "keys": ["ctrl+shift+e"], "command": "feeling_lucky_js" },
 	{ "keys": ["super+ctrl+e"], "command": "make_config_dot_feeling_lucky" }
 ]
