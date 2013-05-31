@@ -140,7 +140,7 @@ class FeelingLucky(sublime_plugin.TextCommand):
 			data = json.load(f)
 			f.close()
 			return data
-		except Exception, e:
+		except Exception as e:
 			if sublime.ok_cancel_dialog('Not found config.feelinglucky\nMake config.feelinglucky file ?') :
 				self.view.run_command("make_config_dot_feeling_lucky")
 			return False
@@ -228,7 +228,7 @@ class MakeConfigDotFeelingLucky(sublime_plugin.TextCommand):
 		    		elif file[-5:] == ".scss" :
 		    			sass.append(ff)
 
-			print 'Make config.feelingLucky'
+			print('Make config.feelingLucky')
 			config = { "sass":sass, "css":css }
 			file = open(os.path.join(projectPath, "config.feelinglucky"), "w")
 			json.dump(config, file, indent=4)
@@ -285,7 +285,7 @@ def _showAlert(message) :
 	sublime.error_message("SublimeFeelingLucky : \n" + message)
 
 def _printError(message) :
-	print "[FeelingLucky Error] : " + message
+	print("[FeelingLucky Error] : " + message)
 
 # file type check
 def _check(self, range, type) :
