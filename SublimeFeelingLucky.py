@@ -1,7 +1,7 @@
 #
 # SublimeFeelingLucky.py
 #
-# v 0.2.0
+# v 0.2.2
 #
 
 import sublime, sublime_plugin, re, os, json, time
@@ -9,6 +9,8 @@ import sublime, sublime_plugin, re, os, json, time
 _word = ""
 _prefix = ""
 _type = ""
+_count = 0
+_openCount = 0
 
 #
 # css
@@ -37,8 +39,7 @@ class FeelingLucky(sublime_plugin.TextCommand):
 	def run(self, edit):
 		global _prefix
 		global _word
-
-		projectPath = sublime.active_window().folders()[0]
+		global _count
 
 		if not _check(self, -4, "html") :
 			_showAlert("html file only")
@@ -62,76 +63,41 @@ class FeelingLucky(sublime_plugin.TextCommand):
 				if   type == "id" 	 : _prefix = "#"
 				elif type == "class" : _prefix = "."
 
-			count = 0
+			_count = 0
+			obj = []
 
 			if _type == "css" :
-
-				# check css
-				if "css" in data :
-					for css in data["css"] :
-						count += 1
-						cssFile = os.path.join(projectPath, css)
-						if os.path.isfile(cssFile) :
-
-							# TODO
-							# Already Open file move
-
-							self.view.window().run_command('expand_and_focus_right_panel', { "len": len(data["css"]), "count": count })
-							cssView = self.view.window().open_file(cssFile)
-							cssView.window().set_view_index(cssView, count, 0)
-						else :
-							_printError("Not found " + css)
-
-				# check sass
-				if "sass" in data :
-					for sass in data["sass"] :
-						count += 1
-						sassFile = os.path.join(projectPath, sass)
-						if os.path.isfile(sassFile) :
-
-							# TODO
-							# Already Open file move
-
-							self.view.window().run_command('expand_and_focus_right_panel', { "len": len(data["sass"]), "count": count })
-							sassView = self.view.window().open_file(sassFile)
-							sassView.window().set_view_index(sassView, count, 0)
-						else :
-							_printError("Not found " + sass)
+				# check css / sass
+				self.fileCheck(data, "css", obj, _count)
+				self.fileCheck(data, "sass", obj, _count)
 
 			elif _type == "js" :
+				# check js / coffee
+				self.fileCheck(data, "js", obj, _count)
+				self.fileCheck(data, "coffee", obj, _count)
 
-				# check js
-				if "js" in data :
+			for p in obj :
+				self.view.window().run_command('expand_and_focus_right_panel', { "len": p["len"], "count": p["count"] })
+				view = self.view.window().open_file(p["path"])
+				view.window().set_view_index(view, p["count"], 0)
 
-					for js in data["js"] :
-						count += 1
-						jsFile = os.path.join(projectPath, js)
-						if os.path.isfile(jsFile) :
 
-							# TODO
-							# Already Open file move
+	def fileCheck(self, data, type, list, count) :
 
-							self.view.window().run_command('expand_and_focus_right_panel', { "len": len(data["js"]), "count": count })
-							jsView = self.view.window().open_file(jsFile)
-							jsView.window().set_view_index(jsView, count, 0)
-						else :
-							_printError("Not found " + js)
+		projectPath = sublime.active_window().folders()[0]
+		if type in data :
+			for a in data[type] :
+				count += 1
+				f = os.path.join(projectPath, a)
+				if os.path.isfile(f) :
 
-				# check coffee
-				if "coffee" in data :
-					for coffee in data["coffee"] :
-						count += 1
-						coffeeFile = os.path.join(projectPath, coffee)
-						if os.path.isfile(coffeeFile) :
+					# TODO
+					# Already Open file move
 
-							# TODO
-							# Already Open file move
+					list.append({"path":f, "len":len(data[type]), "count":count})
+				else :
+					_printError("Not found " + a)
 
-							self.view.window().run_command('expand_and_focus_right_panel', { "len": len(data["coffee"]), "count": count })
-							coffeeView = self.view.window().open_file(coffeeFile)
-							coffeeView.window().set_view_index(coffeeView, count, 0)
-						else :
-							_printError("Not found " + coffee)
 
 
 	def loadJSON(self) :
@@ -171,6 +137,7 @@ class FeelingLuckyFile(sublime_plugin.TextCommand):
 class FeelingLuckyCssFile(sublime_plugin.TextCommand):
 
 	def run(self, edit):
+		# global _openCount
 
 		text = _prefix + _word
 		match = self.view.find(text, 0, sublime.LITERAL)
@@ -183,6 +150,7 @@ class FeelingLuckyCssFile(sublime_plugin.TextCommand):
 class FeelingLuckyJsFile(sublime_plugin.TextCommand):
 
 	def run(self, edit):
+		# global _openCount
 
 		text = _prefix + _word
 		match = self.view.find(text, 0, sublime.LITERAL)
@@ -219,6 +187,8 @@ class MakeConfigDotFeelingLucky(sublime_plugin.TextCommand):
 		else :
 			css = []
 			sass = []
+			js = []
+			coffee = []
 			for root, dirs, files in os.walk(projectPath):
 			    for file in files:
 			    	f = os.path.join(root, file)
@@ -227,9 +197,13 @@ class MakeConfigDotFeelingLucky(sublime_plugin.TextCommand):
 			    		css.append(ff)
 		    		elif file[-5:] == ".scss" :
 		    			sass.append(ff)
+		    		elif file[-3:] == ".js" :
+		    			js.append(ff)
+		    		elif file[-7:] == ".coffee" :
+		    			coffee.append(ff)
 
 			print 'Make config.feelingLucky'
-			config = { "sass":sass, "css":css }
+			config = { "js":js, "coffee":coffee, "sass":sass, "css":css }
 			file = open(os.path.join(projectPath, "config.feelinglucky"), "w")
 			json.dump(config, file, indent=4)
 
