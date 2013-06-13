@@ -28,12 +28,13 @@ $ git clone git@github.com:azzip/SublimeFeelingLucky.git
 
 
 ## config.feelinglucky
-`config.feelinglucky` is required in project root.
+`config.feelinglucky` is required in project root dir.  
 Designation of `.css`, `.sass`, `.js`, `.coffee` target file.
 
 ### Make
-1. Context Menu `Make config.feelinglucky`  
-2. Command short cut `super+ctrl+e`
+1. Command Palett `Make config.feelinglucky`  
+2. Context Menu `Make config.feelinglucky`  
+3. Command short cut `super+ctrl+e`
 
 
 ### Example
